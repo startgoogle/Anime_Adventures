@@ -1,121 +1,179 @@
-if game.Players.LocalPlayer.Name == getgenv().Username then
-    local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/Jxereas/UI-Libraries/main/notification_gui_library.lua", true))()
-    local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
-    
-    local Window = Rayfield:CreateWindow({
-        Name = "Anime Adventures",
-        LoadingTitle = "gay pp",
-        LoadingSubtitle = "paravox",
-        ConfigurationSaving = {
-           Enabled = false,
-           FolderName = nil, -- Create a custom folder for your hub/game
-           FileName = "Pho Long"
-        },
-        Discord = {
-           Enabled = false,
-           Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
-           RememberJoins = true -- Set this to false to make them join the discord every time they load it up
-        },
-        KeySystem = false, -- Set this to true to use our key system
-        KeySettings = {
-           Title = "Untitled",
-           Subtitle = "Key System",
-           Note = "No method of obtaining the key is provided",
-           FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
-           SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
-           GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-           Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
-        }
-     })
+if game:GetService("Players").LocalPlayer.Name == getgenv().Username then
 
-     local Tab = Window:CreateTab("Alt Features", 4483362458)
-     local Section = Tab:CreateSection("Summon")
+    for _,v in pairs(game:GetService("CoreGui"):GetChildren()) do
+        if v:FindFirstChild("Window") then
+            print("yeah")
+            if v:FindFirstChild("Window"):FindFirstChild("Watermark") then
+                v:Destroy()
+            end
+        end
+    end
 
-     local Summon10 = Tab:CreateButton({
-        Name = "Summon 10",
-        Callback = function()
-            local args = {
-                [1] = "EventClover",
-                [2] = "gems10"
-            }
-    
-            game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_from_banner:InvokeServer(unpack(args))
-        end,
-     })
+    local UILib = loadstring(game:HttpGet('https://raw.githubusercontent.com/StepBroFurious/Script/main/HydraHubUi.lua'))()
+    local Window = UILib.new("Anime Adventures", game.Players.LocalPlayer.Name, "blah blah blah")
+    local Category1 = Window:Category("Main", "http://www.roblox.com/asset/?id=8395621517")
+    local SubButton1 = Category1:Button("Features", "http://www.roblox.com/asset/?id=8395747586")
+    local Section1 = SubButton1:Section("Summons", "Left")
 
-     local Summon1 = Tab:CreateButton({
-        Name = "Summon 1",
-        Callback = function()
+    Section1:Button({
+        Title = "Summon",
+        ButtonName = "Summon 1",
+        Description = "Summons 1 unit",
+        }, function(value)
         local args = {
             [1] = "EventClover",
             [2] = "gems"
         }
 
         game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_from_banner:InvokeServer(unpack(args))
+    end)
 
-        end,
-     })
+    Section1:Button({
+        Title = "Summon",
+        ButtonName = "Summon 10",
+        Description = "Summons 10 units",
+        }, function(value)
+        local args = {
+            [1] = "EventClover",
+            [2] = "gems10"
+        }
 
+        game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_from_banner:InvokeServer(unpack(args))
+    end)
 
-     local Section2 = Tab:CreateSection("Codes")
+    local def;
 
-     local Button = Tab:CreateButton({
-        Name = "Redeem Codes",
-        Callback = function()
-            local Codes = {"ANNIVERSARY", "BILLION", "SUMMER2023"}
+    Section1:Textbox({
+        Title = "Summon Amount(10s)",
+        Description = "",
+        Default = "",
+        }, function(value)
+            def = value
+    end)
 
-            for _,v in pairs(Codes) do
+    Section1:Button({
+        Title = "Summon (Amount)",
+        ButtonName = "Summon",
+        Description = "",
+        }, function(value)
+            for i= 1,def do
                 local args = {
-                    [1] = v
-                }
-            
-                game:GetService("ReplicatedStorage").endpoints.client_to_server.redeem_code:InvokeServer(unpack(args))
-            end
-        end,
-     })
-
-     local Section2 = Tab:CreateSection("Summer Stuff")
-
-     local Button = Tab:CreateButton({
-        Name = "Buy Summer Stars",
-        Callback = function()
-            for i = 1,10 do
-                local args = {
-                    [1] = "capsule_summer",
-                    [2] = "event",
-                    [3] = "event_shop",
-                    [4] = "1"
-                }
-
-                game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_item_generic:InvokeServer(unpack(args))
-            end
-        end,
-     })
-
-     local Button = Tab:CreateButton({
-        Name = "Open Summer Stars",
-        Callback = function()
-            for i = 1,9 do
-                local args = {
-                    [1] = "capsule_summer",
-                    [2] = {
-                        ["use10"] = false
-                    }
+                    [1] = "EventClover",
+                    [2] = "gems10"
                 }
         
-                game:GetService("ReplicatedStorage").endpoints.client_to_server.use_item:InvokeServer(unpack(args))
-                task.wait(3)
-             end
-        end,
-     })
+                game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_from_banner:InvokeServer(unpack(args))
+                task.wait(4)
+        end
+    end)
 
-     
-     local Section3 = Tab:CreateSection("Destroy UI")
+    local Summer = SubButton1:Section("Summer Event", "Left")
 
-     local DestroyUI = Tab:CreateButton({
-        Name = "Destroy UI",
-        Callback = function()
-            Rayfield:Destroy()
-        end,
-     })
+    Summer:Button({
+        Title = "Summer",
+        ButtonName = "Buy 1 Summer Star",
+        Description = "Buys 1 summer star",
+        }, function(value)
+        local args = {
+            [1] = "capsule_summer",
+            [2] = "event",
+            [3] = "event_shop",
+            [4] = "1"
+        }
+
+        game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_item_generic:InvokeServer(unpack(args))
+
+    end)
+
+    stars = 0;
+
+    Summer:Textbox({
+        Title = "Summer Stars Amount",
+        Description = "",
+        Default = "",
+        }, function(value)
+        stars = value
+    end)
+
+    Summer:Button({
+        Title = "Summer",
+        ButtonName = "Buy Summer Stars",
+        Description = "Buys summer stars",
+        }, function(value)
+
+        for i = 1,stars do
+            local args = {
+                [1] = "capsule_summer",
+                [2] = "event",
+                [3] = "event_shop",
+                [4] = "1"
+            }
+    
+            game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_item_generic:InvokeServer(unpack(args))
+        end
+    end)
+
+    Summer:Button({
+        Title = "Open Stars",
+        ButtonName = "Open Stars",
+        Description = "Opens summer stars",
+        }, function(value)
+
+        for i = 1,10 do
+            local args = {
+                [1] = "capsule_summer",
+                [2] = {
+                    ["use10"] = false
+                }
+            }
+
+            game:GetService("ReplicatedStorage").endpoints.client_to_server.use_item:InvokeServer(unpack(args))
+        end
+    end)
+
+    local Section2 = SubButton1:Section("Codes", "Right")
+
+    Section2:Button({
+        Title = "Codes",
+        ButtonName = "Redeem",
+        Description = "Redeems Codes",
+        }, function(value)
+        local Codes = {"ANNIVERSARY", "BILLION", "SUMMER2023"}
+
+        for _,v in pairs(Codes) do
+            local args = {
+                [1] = v
+            }
+            
+            game:GetService("ReplicatedStorage").endpoints.client_to_server.redeem_code:InvokeServer(unpack(args))
+        end
+    end)
+
+    local Section3 = SubButton1:Section("Misc", "Right")
+
+
+    Section3:Button({
+        Title = "Disable",
+        ButtonName = "Popups",
+        Description = "Disable Popup",
+        }, function(value)
+            if game:GetService("ReplicatedStorage").endpoints.server_to_client:FindFirstChild("show_unit_and_item_rewards") then
+                game:GetService("ReplicatedStorage").endpoints.server_to_client.show_unit_and_item_rewards:Destroy()
+        end
+    end)
+
+    Section3:Button({
+        Title = "DestroyUI",
+        ButtonName = "Destroys",
+        Description = "",
+        }, function(value)
+            for _,v in pairs(game:GetService("CoreGui"):GetChildren()) do
+            if v:FindFirstChild("Window") then
+                print("yeah")
+                if v:FindFirstChild("Window"):FindFirstChild("Watermark") then
+                    v:Destroy()
+                end
+            end
+        end
+    end)
 end
